@@ -39,7 +39,7 @@ export class SubscribeAnimeScene {
     });
 
     const inlineButtons = Markup.inlineKeyboard(inlineValue);
-    await ctx.replyWithHTML('чекай', inlineButtons);
+    await ctx.replyWithHTML('наблюдай', inlineButtons);
   }
 
   @Action(/\w*\d\w*/)
