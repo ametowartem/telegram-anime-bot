@@ -1,12 +1,12 @@
 import {
   Action,
   Command,
-  Ctx,
+  Ctx, Hears,
   Message,
   On,
   Scene,
-  SceneEnter,
-} from 'nestjs-telegraf';
+  SceneEnter
+} from "nestjs-telegraf";
 import { Context, Markup } from 'telegraf';
 import { SubscriptionEntity } from '../../subscription/subscription.entity';
 import { Inject, Injectable } from '@nestjs/common';
@@ -30,19 +30,11 @@ export class SubscribeAnimeScene {
 
   @SceneEnter()
   async choseAnime(@Ctx() ctx: SceneContext) {
-    const menu = Markup.keyboard([
-      [
-        Markup.button.callback(
-          '/leave',
-          '/leave',
-          // true,
-        ),
-      ],
-    ]).oneTime();
+    const menu = Markup.keyboard([[Markup.button.text('🔙')]]).oneTime();
     await ctx.reply('Пиши название интересующего аниме ', menu);
   }
 
-  @Command('leave')
+  @Hears('🔙')
   async leave(@Ctx() ctx: SceneContext) {
     await ctx.reply('Отменил выбор аниме');
     await ctx.scene.leave();

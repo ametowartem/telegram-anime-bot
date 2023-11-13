@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { Action, Command, Ctx, Scene, SceneEnter } from 'nestjs-telegraf';
+import { Action, Command, Ctx, Hears, Scene, SceneEnter } from "nestjs-telegraf";
 import { SceneContext } from 'telegraf/typings/scenes';
 import { Context, Markup } from 'telegraf';
 import { IAnime } from '../interface/anime.interface';
@@ -22,19 +22,11 @@ export class DeleteSubscriptionScene {
   @SceneEnter()
   async chooseAnime(@Ctx() ctx: SceneContext) {
     await this.telegramService.sendAnimeTitle(ctx.from.id, ctx);
-    const menu = Markup.keyboard([
-      [
-        Markup.button.callback(
-          '/leave',
-          '/leave',
-          // true,
-        ),
-      ],
-    ]).oneTime();
+    const menu = Markup.keyboard([[Markup.button.text('🔙')]]).oneTime();
     await ctx.reply('Выбери аниме для удаления подписки ', menu);
   }
 
-  @Command('leave')
+  @Hears('🔙')
   async leave(@Ctx() ctx: SceneContext) {
     await ctx.reply('Отменил выбор аниме');
     await ctx.scene.leave();

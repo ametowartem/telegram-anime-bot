@@ -15,9 +15,9 @@ export class TelegramService {
 
   async start(ctx: Context) {
     const menu = Markup.keyboard([
-      [Markup.button.text('/subscribeAnime')],
-      [Markup.button.text('/getUserSubscriptions')],
-      [Markup.button.text('/deleteSubscription')],
+      [Markup.button.text('❤')],
+      [Markup.button.text('📖')],
+      [Markup.button.text('❌')],
     ]).oneTime();
     await ctx.reply(
       '1. подписаться на аниме\n2. получить список подписок\n3. Отписаться от аниме',

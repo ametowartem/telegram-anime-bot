@@ -1,4 +1,4 @@
-import { Command, Ctx, Start, Update } from 'nestjs-telegraf';
+import { Action, Command, Ctx, Hears, Start, Update } from "nestjs-telegraf";
 import { Scenes } from 'telegraf';
 import { SceneContext } from 'telegraf/typings/scenes';
 import { SubscriptionService } from '../../subscription/subscription.service';
@@ -17,22 +17,22 @@ export class TelegramUpdate {
     await this.telegramService.start(ctx);
   }
 
-  @Command('getUserSubscriptions')
+  @Hears('📖')
   async getUserSubscriptions(@Ctx() ctx: SceneContext) {
     await this.telegramService.sendUserSubscriptions(ctx);
   }
 
-  @Command('subscribeAnime')
+  @Hears('❤')
   async subscribeAnime(@Ctx() ctx: SceneContext) {
     await ctx.scene.enter('subscribeAnime');
   }
 
-  @Command('deleteSubscription')
+  @Hears('❌')
   async unsubscribeAnime(@Ctx() ctx: Context) {
     await ctx.scene.enter('deleteSubscription');
   }
 
-  @Command('leave')
+  @Hears('🔙')
   async leave(@Ctx() ctx: SceneContext) {
     await this.telegramService.start(ctx);
   }
