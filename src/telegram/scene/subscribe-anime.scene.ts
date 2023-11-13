@@ -41,7 +41,7 @@ export class SubscribeAnimeScene {
     await this.telegramService.start(ctx);
   }
 
-  @Action(/\w*\d\w*/)
+  @Action(/^[A-Za-z0-9_-]+$/)
   async onAnswer(@Ctx() ctx: Context & any) {
     ctx.answerCbQuery('подписываюсь на анимешку');
 

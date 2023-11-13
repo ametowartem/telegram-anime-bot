@@ -44,7 +44,7 @@ export class TelegramService {
         ctx.from.id,
         anime.name,
       );
-      const urlKey = nanoid(6);
+      const urlKey = nanoid(8);
       this.redis.set(
         urlKey,
         JSON.stringify({ url: anime.url, name: anime.name }),
