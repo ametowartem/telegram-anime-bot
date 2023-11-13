@@ -14,4 +14,19 @@ export class SubscriptionRepository extends Repository<SubscriptionEntity> {
       .addGroupBy('user_subscription.uuid')
       .getMany();
   }
+
+  async getSubscriptionsGroupByUser(userUuid): Promise<SubscriptionEntity[]> {
+    return await this.createQueryBuilder('user_subscription')
+      .groupBy('user_subscription.user_uuid')
+      .addGroupBy('user_subscription.uuid')
+      .where({ userUuid })
+      .getMany();
+  }
+
+  async checkAnimeByUser(userUuid, animeName): Promise<SubscriptionEntity> {
+    return await this.createQueryBuilder('user_subscription')
+      .where({ userUuid })
+      .andWhere({ animeName })
+      .getOne();
+  }
 }

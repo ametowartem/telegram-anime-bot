@@ -4,6 +4,7 @@ import { SubscriptionService } from '../subscription.service';
 import { InjectBot } from 'nestjs-telegraf';
 import { Context, Markup, Telegraf } from 'telegraf';
 import * as moment from 'moment';
+import { parseAnimeSeason } from '../subscription.utils';
 
 @Injectable()
 export class SubscriptionCronJob {
@@ -14,19 +15,20 @@ export class SubscriptionCronJob {
     @InjectBot() private bot: Telegraf<Context>,
   ) {}
 
-  @Cron(CronExpression.EVERY_30_SECONDS)
+  @Cron(CronExpression.EVERY_DAY_AT_6PM)
   async sendAnime() {
     const subscriptions =
       await this.subscriptionService.getSubscriptionsGroupByAnime();
 
     for (const anime of subscriptions) {
       const animeButtons = [];
-      const episodes = await this.subscriptionService.parseAnimeSeason(
-        anime.animeUrl,
-      );
+      const episodes = await parseAnimeSeason(anime.animeUrl);
 
       for (const episode of episodes) {
-        const dayDiff = moment().diff(episode.dateRU, 'day');
+        const dayDiff = moment(new Date().setHours(12, 0, 0, 0)).diff(
+          episode.dateRU,
+          'day',
+        );
 
         if (dayDiff === 0) {
           animeButtons.push([

@@ -1,4 +1,4 @@
-export interface IEpisode {
+export interface IAnime {
   url: string;
   name: string;
 }

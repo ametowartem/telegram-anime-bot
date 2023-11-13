@@ -5,7 +5,9 @@ import { CoreModule } from '../core/core.module';
 import { TelegramUpdate } from './update/telegram.update';
 import { SubscriptionModule } from '../subscription/subscription.module';
 import { telegramMiddleware } from './middleware/telegram.middleware';
-import { SubscribeAnimeScene } from "./scene/subscribe-anime.scene";
+import { SubscribeAnimeScene } from './scene/subscribe-anime.scene';
+import { TelegramService } from './telegram.service';
+import { DeleteSubscriptionScene } from './scene/delete-subscription.scene';
 
 @Module({
   imports: [
@@ -20,6 +22,11 @@ import { SubscribeAnimeScene } from "./scene/subscribe-anime.scene";
       inject: [ConfigService],
     }),
   ],
-  providers: [TelegramUpdate, SubscribeAnimeScene],
+  providers: [
+    TelegramUpdate,
+    SubscribeAnimeScene,
+    TelegramService,
+    DeleteSubscriptionScene,
+  ],
 })
 export class TelegramModule {}
